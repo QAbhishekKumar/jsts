@@ -18,7 +18,6 @@ export function getInterface(obj: AnyObject, name?: string, initialByProducts: A
       .call(value)
       .replace(/\W|object/g, "");
 
-    console.log(typeClass);
     if (typeClass === typeOfObject) {
       const tsType = getInterface(value as AnyObject, key);
       ty = ty.concat(createTypeNode(key, tsType.interfaceName));

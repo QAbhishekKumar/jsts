@@ -1,14 +1,28 @@
-import './style.css'
-import { getInterface } from './jsts/jsts';
-import { input } from './input';
+import "./style.css";
+import { getInterface } from "./jsts/jsts";
 
-const inferredTypes = getInterface(input);
+document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
+<pre></pre>
+`;
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<h1>works well without function</h1>
+function handleOnInput(e: Event) {
+  try {
+    // @ts-ignore
+    const inputObject = JSON.parse(e?.target?.value);
+    const inferredTypes = getInterface(inputObject);
+    document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
 <pre><code>
 ${inferredTypes.type}
 
-${Object.values(inferredTypes.byProducts).join('\n\n')}
+${Object.values(inferredTypes.byProducts).join("\n\n")}
 </code></pre>
 `;
+  } catch (err) {
+    console.log(err);
+    document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
+      <div class="error">Check if your JSON is valid?</div>
+    `;
+  }
+}
+
+document.getElementById("input")!.addEventListener("input", handleOnInput);
