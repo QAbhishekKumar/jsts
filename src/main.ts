@@ -1,5 +1,5 @@
 import "./style.css";
-import "highlight.js/styles/github.css";
+import "highlight.js/styles/github-dark.css";
 
 import { highlightTS } from "./jsts/utils";
 import { getInterface } from "./jsts/jsts";

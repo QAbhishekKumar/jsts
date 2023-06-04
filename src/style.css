@@ -9,17 +9,21 @@ body {
   padding: 16px;
   display: flex;
   flex-direction: column;
+  background-color: rgb(2, 31, 59);
 }
 
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.44);
 }
 
 a {
   text-decoration: none;
-  background-color: rgb(15, 64, 99);
-  color: white;
+  border: 1px solid rgba(57, 191, 47);;
+  color: rgba(57, 191, 47);
   padding: 4px 8px;
   border-radius: 4px;
 }
@@ -38,6 +42,13 @@ a {
   margin-right: 16px;
   resize: none;
   overflow: auto;
+  background-color: #111;
+  color: rgba(245, 222, 179, 0.59);
+}
+
+#input:focus {
+  outline: none;
+  border: 1px solid rgb(57, 191, 47);
 }
 
 #output{
@@ -53,6 +64,9 @@ pre {
   padding: 8px 16px;
   border-radius: 8px;
   overflow: auto;
+  background-color: #111;
+  color: rgba(245, 222, 179, 0.6);
+  font-size: 14px;
 }
 
 .error {
