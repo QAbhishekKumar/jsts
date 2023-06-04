@@ -11,6 +11,19 @@ body {
   flex-direction: column;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  text-decoration: none;
+  background-color: rgb(15, 64, 99);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
 #app {
   display: flex;
   width: 100%;

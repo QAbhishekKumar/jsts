@@ -1,9 +1,6 @@
 import "./style.css";
 import { getInterface } from "./jsts/jsts";
-
-document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
-<pre></pre>
-`;
+import { testJSON } from './input';
 
 function handleOnInput(e: Event) {
   try {
@@ -26,3 +23,14 @@ ${Object.values(inferredTypes.byProducts).join("\n\n")}
 }
 
 document.getElementById("input")!.addEventListener("input", handleOnInput);
+
+(function init() {
+  const inferredTypes = getInterface(testJSON);
+  document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
+<pre><code>
+${inferredTypes.type}
+
+${Object.values(inferredTypes.byProducts).join("\n\n")}
+</code></pre>
+`;
+})();
