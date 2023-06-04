@@ -2,8 +2,9 @@ export const JsToTsMap = {
   Number: "number",
   String: "string",
   Boolean: "boolean",
-  Date: "Date",
   Null: 'null',
+  Undefined: 'undefined'
 };
 
 export const typeOfObject = "Object";
+export const typeofArray = 'Array';
