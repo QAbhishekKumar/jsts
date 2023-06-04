@@ -1,4 +1,7 @@
 import "./style.css";
+import "highlight.js/styles/github.css";
+
+import { highlightTS } from "./jsts/utils";
 import { getInterface } from "./jsts/jsts";
 import { testJSON } from './input';
 
@@ -9,9 +12,9 @@ function handleOnInput(e: Event) {
     const inferredTypes = getInterface(inputObject);
     document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
 <pre><code>
-${inferredTypes.type}
+${highlightTS(inferredTypes.type)}
 
-${Object.values(inferredTypes.byProducts).join("\n\n")}
+${highlightTS(Object.values(inferredTypes.byProducts).join("\n\n"))}
 </code></pre>
 `;
   } catch (err) {
@@ -28,9 +31,9 @@ document.getElementById("input")!.addEventListener("input", handleOnInput);
   const inferredTypes = getInterface(testJSON);
   document.querySelector<HTMLDivElement>("#output")!.innerHTML = `
 <pre><code>
-${inferredTypes.type}
+${highlightTS(inferredTypes.type)}
 
-${Object.values(inferredTypes.byProducts).join("\n\n")}
+${highlightTS(Object.values(inferredTypes.byProducts).join("\n\n"))}
 </code></pre>
 `;
 })();
