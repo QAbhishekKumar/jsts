@@ -1,4 +1,4 @@
-import { JsToTsMap, typeOfObject, typeofArray } from './constants';
+import { typeOfObject, typeofArray } from './constants';
 import { toCapitalCase } from './utils';
 
 function createTypeNode(key: string, type: any) {
@@ -9,13 +9,22 @@ interface AnyObject {
   [key: string]: unknown;
 }
 
-function handleArrays(arr: any[]) {
-  const allTypesInArray = new Set();
-  arr.forEach((item) => {
-    allTypesInArray.add(typeof item);
+function handleArrays(arr: any[], name: string) {
+  const allTypesInArray = new Set<string>();
+  const byProducts: AnyObject = {};
+  arr.forEach((item, index) => {
+    const typeClass = Object.prototype.toString
+      .call(item)
+      .replace(/\W|object/g, "");
+    if (typeClass === typeOfObject) {
+      const  tsType= getInterface(item, `${name}${index}`);
+      byProducts[tsType.interfaceName] = tsType.type;
+      allTypesInArray.add(tsType.interfaceName);
+    } else {
+      allTypesInArray.add(typeClass.toLowerCase());
+    }
   });
   const arrayOfTypes = Array.from(allTypesInArray);
-
   let typeDef = 'any[]';
   if (arrayOfTypes.length === 1) {
     typeDef = `${Array.from(allTypesInArray)}[]`;
@@ -23,7 +32,10 @@ function handleArrays(arr: any[]) {
   if (arrayOfTypes.length > 1) {
     typeDef = `( ${Array.from(allTypesInArray).join(' | ')} )[]`;
   }
-  return typeDef;
+  return {
+    type: typeDef,
+    byProducts
+  };
 }
 
 export function getInterface(obj: AnyObject, name?: string, initialByProducts: AnyObject = {}) {
@@ -44,11 +56,13 @@ export function getInterface(obj: AnyObject, name?: string, initialByProducts: A
       });
       ty = ty.concat(createTypeNode(key, tsType.interfaceName));
     } else if (typeClass === typeofArray) {
-      const typeDef = handleArrays(value as any[]);
-      ty = ty.concat(createTypeNode(key, typeDef));
+      const tsType = handleArrays(value as any[], key);
+      Object.keys(tsType.byProducts).forEach(prodKey => {
+        byProducts[prodKey] = tsType.byProducts[prodKey];
+      });
+      ty = ty.concat(createTypeNode(key, tsType.type));
     } else {
-      // @ts-ignore
-      ty = ty.concat(createTypeNode(key, JsToTsMap[typeClass]));
+      ty = ty.concat(createTypeNode(key, typeClass.toLowerCase()));
     }
   }
 

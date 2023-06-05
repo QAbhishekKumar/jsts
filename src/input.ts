@@ -23,3 +23,24 @@ export const testJSON = {
 // export const testJSON = {
 //     "latex": [5]
 // };
+
+// export const testJSON = {
+//     "white": [
+//         {
+//             "b": 5,
+//             "c": {
+//                 "see": "this"
+//             },
+//         },
+//         {
+//             "b": 5,
+//             "d": "hello"
+//         }
+//     ],
+//     "yellow": [
+//         {
+//             "i": "hello"
+//         }
+//     ],
+//     "x": [5, true],
+// };
